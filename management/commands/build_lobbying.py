@@ -115,7 +115,7 @@ class Command(BaseCommand):
         '''
         i = 0 # Loop counter to trigger bulk saves
         bulk_records = []
-        for f in Filing.objects.all():
+        for f in Filing.objects.filter(form_id__in=['F635', 'F615', 'F625', 'F645',]):
             qs = LexpCd.objects.filter(filing_id=f.filing_id_raw, amend_id=f.amend_id)
             for q in qs:
                 insert = Gift()
@@ -162,7 +162,7 @@ class Command(BaseCommand):
         '''
         These are the campaign contributions that the lobbyists and firms reported donating
         '''
-        for f in Filing.objects.all():
+        for f in Filing.objects.filter(form_id__in=['F635', 'F615', 'F625', 'F645',]):
             qs = LccmCd.objects.filter(filing_id=f.filing_id_raw, amend_id=f.amend_id)
             for q in qs:
                 insert = Contribution()
