@@ -106,7 +106,7 @@ class Gift(models.Model): # Activity Expenses in the parlance of the forms
 
 class Contribution(models.Model):
     '''
-    
+    Campaign contributions that the lobbyist report giving
     '''
     filing = models.ForeignKey(Filing)
     acct_name = models.CharField(max_length=90L, blank=True)
@@ -134,11 +134,21 @@ class Relationship(models.Model):
     Loops through each filer and records the filer's relationship to other filers
     '''
     filer = models.ForeignKey(Filer)
-    filer_id_raw = models.IntegerField() # The CAL-ACCESS FILER_ID of the filer that's related to the ForeignKey Filer in this model
-    filer_name = models.CharField(max_length=255L, null=True) # The CAL-ACCESS name of the filer that's related to the ForeignKey Filer in this model
-    link_type = models.CharField(max_length=255L, null=True) # Link type description
+    related_filer_id_raw = models.IntegerField() # The CAL-ACCESS FILER_ID of the filer that's related to the ForeignKey Filer in this model
+    related_filer_name = models.CharField(max_length=255L, null=True) # The CAL-ACCESS name of the filer that's related to the ForeignKey Filer in this model
+    related_link_type = models.CharField(max_length=255L, null=True) # Link type description
     
     def __unicode__(self):
         return '%s -- %s -- %s' % (self.filer.name, self.link_type, self.filer_name)
 
+class Client(models.Model):
+    filer = models.ForeignKey(Filer)
+    name = models.CharField(max_length=255)
 
+class Firm(models.Model):
+    filer = models.ForeignKey(Filer)
+    name = models.CharField(max_length=255)
+
+class Lobbyist(models.Model):
+    filer = models.ForeignKey(Filer)
+    name = models.CharField(max_length=255)
