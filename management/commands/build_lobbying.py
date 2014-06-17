@@ -234,8 +234,8 @@ class Command(BaseCommand):
         '''
         
         '''
-        for f in Filing.objects.filter(form_id__in=['F635', 'F615', 'F625', 'F645',]):
-            qs = CvrLobbyDisclosureCd.objects.filter(filing_id=f.filing_id, amend_id=f.amend_id)
+        filing_list = list(CvrLobbyDisclosureCd.object.values_list('filing_id', flat=True).distinct())
+        
     
     def load_client(self):
         i = 0

@@ -139,7 +139,7 @@ class Relationship(models.Model):
     related_link_type = models.CharField(max_length=255L, null=True) # Link type description
     
     def __unicode__(self):
-        return '%s -- %s -- %s' % (self.filer.name, self.link_type, self.filer_name)
+        return '%s -- %s -- %s' % (self.filer.name, self.related_link_type, self.related_filer_name)
 
 class Client(models.Model):
     filer = models.ForeignKey(Filer)
