@@ -52,6 +52,8 @@ class Command(BaseCommand):
         '''
         Load up all the filer types associated with lobbying reports
         '''
+        i = 0
+        bulk_records = []
         filer_id_list = list(FilernameCd.objects.filter(filer_type__in=['CLIENT', 'LOBBYIST', 'FIRM', 'EMPLOYER', 'PAYMENT TO INFLUENCE',]).values_list('filer_id', flat=True).distinct())
         for filer_id in filer_id_list:
             obj = FilernameCd.objects.filter(filer_id=filer_id).order_by('-effect_dt')[0]
@@ -72,7 +74,17 @@ class Command(BaseCommand):
             insert.effective_date = obj.effect_dt
             insert.xref_filer_id  = obj.xref_filer_id
             insert.name = (obj.namt + ' ' + obj.namf + ' ' + obj.naml + ' ' + obj.nams).strip()
-            insert.save()
+            #insert.save()
+            i += 1
+            bulk_records.append(insert)
+            if i % 5000 == 0:
+                Filer.objects.bulk_create(bulk_records)
+                print '%s records created ...' % i 
+                bulk_records = []
+        if len(bulk_records) > 0:
+            Filer.objects.bulk_create(bulk_records)
+            bulk_records = []
+            print '%s records created ...' % i
     
     def load_filings(self):
         '''
@@ -193,7 +205,7 @@ class Command(BaseCommand):
         These are the campaign contributions that the lobbyists and firms reported donating
         '''
         i = 0
-        bulk_recrods = []
+        bulk_records = []
         for f in Filing.objects.filter(form_id__in=['F635', 'F615', 'F625', 'F645',]):
             qs = LccmCd.objects.filter(filing_id=f.filing_id_raw, amend_id=f.amend_id)
             for q in qs:
