@@ -252,7 +252,7 @@ class Command(BaseCommand):
     def load_client(self):
         i = 0
         bulk_records = []
-        client_id_list = Relationship.objects.filter(link_type='CLIENT OF A FIRM').values_list('filer_id_raw', flat=True).distinct() # CLIENT (WHO IS AN EMPLOYER) OF A FIRM
+        client_id_list = Relationship.objects.filter(related_link_type='CLIENT OF A FIRM').values_list('filer_id_raw', flat=True).distinct() # CLIENT (WHO IS AN EMPLOYER) OF A FIRM
         for client_id in client_id_list:
             obj = Filer.objects.get(filer_id_raw=client_id)
             insert = Client()
