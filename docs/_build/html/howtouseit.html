@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Django Cal-Access browser &mdash; django-calaccess-campaign-finance 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="django-calaccess-campaign-finance 0.2 documentation" href="index.html" />
+    <link rel="next" title="Management commands" href="managementcommands.html" />
+    <link rel="prev" title="django-calaccess-campaign-finance" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="managementcommands.html" title="Management commands"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="django-calaccess-campaign-finance"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">django-calaccess-campaign-finance 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="django-cal-access-browser">
+<h1>Django Cal-Access browser<a class="headerlink" href="#django-cal-access-browser" title="Permalink to this headline">¶</a></h1>
+<p><strong>django-calacces-browser</strong> is a simple Django app to build campaign
+finance data from the cal access database. It is reliant on
+<a class="reference external" href="https://github.com/california-civic-data-coalition/django-calaccess-parser">django-calaccess-parser</a>.</p>
+<p>Detailed documentation is in the &#8220;docs&#8221; directory. <em>(coming soon)</em></p>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Django 1.6</li>
+<li><a class="reference external" href="https://docs.djangoproject.com/en/1.6/ref/contrib/humanize/">django.contrib.humanize</a></li>
+<li>MySQL 5.5</li>
+<li><a class="reference external" href="https://github.com/california-civic-data-coalition/django-calaccess-parser">django-calaccess-parser</a></li>
+<li>Patience</li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">Install django-calaccess-browser with pip</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ pip install https://github.com/california-civic-data-coalition/django-calaccess-browser/archive/master.zip
+</pre></div>
+</div>
+</li>
+<li><p class="first">Add <tt class="docutils literal"><span class="pre">campaign_finance</span></tt> to your INSTALLED_APPS setting like this:</p>
+<div class="code python highlight-python"><div class="highlight"><pre>INSTALLED_APPS = (
+    ...
+    &#39;campaign_finance&#39;,
+)
+</pre></div>
+</div>
+<p>In your project <tt class="docutils literal"><span class="pre">urls.py</span></tt>:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span class="o">...</span>
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+    <span class="n">url</span><span class="p">(</span><span class="s">r&#39;^browser/&#39;</span><span class="p">,</span> <span class="n">include</span><span class="p">(</span><span class="s">&#39;campaign_finance.urls&#39;</span><span class="p">)),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Next, sync the database, create a Django admin user, and run the
+management command to extract campaign finance data from from the raw
+calaccess data dump.</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ python manage.py syncdb
+$ python manage.py build_campaign_finance
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">warning:</th><td class="field-body">This&#8217;ll take a while. Go grab some coffee or do something</td>
+</tr>
+</tbody>
+</table>
+<p>else productive with your life.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="building">
+<h2>Building<a class="headerlink" href="#building" title="Permalink to this headline">¶</a></h2>
+<p>The JavaScript and CSS for the project is managed with Grunt and Bower.
+Currently, the JavaScript and SCSS dependencies are not included so
+you&#8217;ll need to build them yourself;</p>
+<ol class="arabic simple">
+<li>Install <a class="reference external" href="http://nodejs.org/">Node.js</a> (this will also include NPM)</li>
+<li>Install Grunt and bower globally with
+<tt class="docutils literal"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">-g</span> <span class="pre">bower</span> <span class="pre">grunt-cli</span></tt></li>
+<li>Go to the <tt class="docutils literal"><span class="pre">static</span></tt> directory and install the required dependencies
+with <tt class="docutils literal"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">&amp;&amp;</span> <span class="pre">bower</span> <span class="pre">install</span></tt></li>
+<li>Generate the <tt class="docutils literal"><span class="pre">main.css</span></tt> file and watch for HTML, CSS and JavaScript
+changes by executing <tt class="docutils literal"><span class="pre">grunt</span></tt></li>
+</ol>
+</div>
+<div class="section" id="explore-data">
+<h2>Explore data<a class="headerlink" href="#explore-data" title="Permalink to this headline">¶</a></h2>
+<p>Start the development server and visit <a class="reference external" href="http://127.0.0.1:8000/browser/">http://127.0.0.1:8000/browser/</a> to
+inspect the Cal-access data.</p>
+</div>
+<div class="section" id="api">
+<h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<p>django-calaccess-browser uses django-tastypie to expose the data as an
+API. Add <tt class="docutils literal"><span class="pre">tastypie</span></tt> to the project <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt> and make sure
+you included <tt class="docutils literal"><span class="pre">campaign_finance.urls</span></tt> in your project&#8217;s <tt class="docutils literal"><span class="pre">urls.py</span></tt>.</p>
+<p>From there visit
+<a class="reference external" href="127.0.0.1:8000/browser/api/v1/filer/?format=json">127.0.0.1:8000/browser/api/v1/filer/?format=json</a>
+to explore the JSON representation of the data.</p>
+</div>
+<div class="section" id="export">
+<h2>Export<a class="headerlink" href="#export" title="Permalink to this headline">¶</a></h2>
+<p>You can also export the data into easily queryable flat files.</p>
+<div class="code bash highlight-python"><div class="highlight"><pre>$ python manage.py export_campaign_finance
+</pre></div>
+</div>
+</div>
+<div class="section" id="update-the-data">
+<h2>Update the data<a class="headerlink" href="#update-the-data" title="Permalink to this headline">¶</a></h2>
+<p>When you are ready to get new data, just blow away both the parser and
+the campaign finance browser app. Then reload them.</p>
+<p>You can do something like this, making sure you fill in your database
+and user names correctly.
+<tt class="docutils literal"><span class="pre">bash</span>&nbsp; <span class="pre">$</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">sqlclear</span> <span class="pre">calaccess</span> <span class="pre">|</span> <span class="pre">mysql</span> <span class="pre">-u</span> <span class="pre">user_name</span> <span class="pre">-p</span> <span class="pre">database_name</span>&nbsp; <span class="pre">$</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">sqlclear</span> <span class="pre">campaign_finance</span> <span class="pre">|</span> <span class="pre">mysql</span> <span class="pre">-u</span> <span class="pre">user_name</span> <span class="pre">-p</span> <span class="pre">database_name</span>&nbsp; <span class="pre">$</span> <span class="pre">pytnon</span> <span class="pre">manage.py</span> <span class="pre">syncdb</span>&nbsp; <span class="pre">$</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">downloadcalaccess</span> <span class="pre">&amp;&amp;</span> <span class="pre">python</span> <span class="pre">manage.py</span> <span class="pre">build_campaign_finance</span></tt></p>
+</div>
+<div class="section" id="authors">
+<h2>Authors<a class="headerlink" href="#authors" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/armendariz">Agustin Armendariz</a></li>
+<li><a class="reference external" href="https://github.com/palewire">Ben Welsh</a></li>
+<li><a class="reference external" href="https://github.com/aboutaaron">Aaron Williams</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Django Cal-Access browser</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#building">Building</a></li>
+<li><a class="reference internal" href="#explore-data">Explore data</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+<li><a class="reference internal" href="#export">Export</a></li>
+<li><a class="reference internal" href="#update-the-data">Update the data</a></li>
+<li><a class="reference internal" href="#authors">Authors</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">django-calaccess-campaign-finance</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="managementcommands.html"
+                        title="next chapter">Management commands</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/howtouseit.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="managementcommands.html" title="Management commands"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="django-calaccess-campaign-finance"
+             >previous</a> |</li>
+        <li><a href="index.html">django-calaccess-campaign-finance 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, California Civic Data Coalition.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

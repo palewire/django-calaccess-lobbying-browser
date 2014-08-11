@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How to contribute &mdash; django-calaccess-campaign-finance 0.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="django-calaccess-campaign-finance 0.2 documentation" href="index.html" />
+    <link rel="prev" title="Models" href="models.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="models.html" title="Models"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">django-calaccess-campaign-finance 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="how-to-contribute">
+<h1>How to contribute<a class="headerlink" href="#how-to-contribute" title="Permalink to this headline">¶</a></h1>
+<p>This walkthrough will show you how to install the source code of this application
+to fix bugs and develop new features.</p>
+<p>First create a new virtualenv.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>virtualenv django-calaccess-campaign-finance
+</pre></div>
+</div>
+<p>Jump in.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>django-calaccess-campaign-finance
+<span class="nv">$ </span>. bin/activate
+</pre></div>
+</div>
+<p>Clone the repository from <a class="reference external" href="https://github.com/california-civic-data-coalition/django-calaccess-campaign-finance">GitHub</a>.</p>
+<p>Make sure you have the <a class="reference external" href="https://github.com/california-civic-data-coalition/django-calaccess-campaign-parser">django-calaccess-parser</a> installed otherwise NONE OF THIS WILL WORK.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git clone https://github.com/california-civic-data-coalition/django-calaccess-campaign-finance.git repo
+</pre></div>
+</div>
+<p>Move into it and install the Python dependencies.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>repo
+<span class="nv">$ </span>pip install -r requirements_dev.txt
+</pre></div>
+</div>
+<p>Make sure you have MySQL installed. If you don&#8217;t, now is the time to hit Google and figure out how. If
+you&#8217;re using Apple&#8217;s OSX operating system, you can <a class="reference external" href="http://benjsicam.me/blog/how-to-install-mysql-on-mac-os-x-using-homebrew-tutorial/">install via Homebrew</a>. If you need to clean up after a previous MySQL installation, <a class="reference external" href="http://stackoverflow.com/questions/4359131/brew-install-mysql-on-mac-os/6378429#6378429">this might help</a>.</p>
+<p>Then create a new database named <tt class="docutils literal"><span class="pre">campaign_finance</span></tt>.</p>
+<div class="highlight-bash"><div class="highlight"><pre>mysqladmin -h localhost -u root -p create campaign_finance
+</pre></div>
+</div>
+<p>If you have a different username, substitute it above. You&#8217;ll be prompted for that user&#8217;s mysql password.</p>
+<p>Then create a file at <tt class="docutils literal"><span class="pre">example/project/settings_local.py</span></tt> to save your custom database credentials. That
+might look something like this.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s">&#39;django.db.backends.mysql&#39;</span><span class="p">,</span>
+        <span class="s">&#39;NAME&#39;</span><span class="p">:</span> <span class="s">&#39;campaign_finance&#39;</span><span class="p">,</span>
+        <span class="s">&#39;USER&#39;</span><span class="p">:</span> <span class="s">&#39;yourusername&#39;</span><span class="p">,</span> <span class="c"># &lt;-- This</span>
+        <span class="s">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s">&#39;yourpassword&#39;</span><span class="p">,</span> <span class="c"># &lt;-- And this</span>
+        <span class="s">&#39;HOST&#39;</span><span class="p">:</span> <span class="s">&#39;localhost&#39;</span><span class="p">,</span>
+        <span class="s">&#39;PORT&#39;</span><span class="p">:</span> <span class="s">&#39;3306&#39;</span><span class="p">,</span>
+        <span class="s">&#39;OPTIONS&#39;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s">&#39;local_infile&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Finally create your database and get to work.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python example/manage.py syncdb
+</pre></div>
+</div>
+<p>You might start by loading the data dump from the web.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python example/manage.py downloadcalaccess
+</pre></div>
+</div>
+<p>Then you can build the campaign finance models</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python example/manage.py build_campaign_finance
+</pre></div>
+</div>
+<p>Finally, you could export the data into CSVs for reporters to dig into</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python example/manage.py export_campaign_finance
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="models.html"
+                        title="previous chapter">Models</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/howtocontribute.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="models.html" title="Models"
+             >previous</a> |</li>
+        <li><a href="index.html">django-calaccess-campaign-finance 0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, California Civic Data Coalition.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
