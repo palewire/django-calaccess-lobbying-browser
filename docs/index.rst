@@ -1,6 +1,6 @@
-django-calaccess-campaign-finance
+django-calaccess-lobbying-activity
 =======================
-A simple Django app to build campaign finance data from the cal access database. It is reliant on `django-calaccess-parser <https://github.com/california-civic-data-coalition/django-calaccess-parser>`_
+A simple Django app to build lobbying activity data from the cal access database. It is reliant on `django-calaccess-parser <https://github.com/california-civic-data-coalition/django-calaccess-parser>`_
 
 |Build Status| |PyPI version| |Coverage Status|
 
