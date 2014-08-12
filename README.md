@@ -1,6 +1,6 @@
 # django-calaccess-lobbying-activity
 
-A simple Django app to build lobbying activity data from the cal access database. It is reliant on [django-calaccess-parser](https://github.com/california-civic-data-coalition/django-calaccess-parser).
+A simple Django app to build lobbying activity data from the cal access database. It is reliant on [django-calaccess-parser](https://github.com/california-civic-data-coalition/django-calaccess-parser). Frontend coming soon.
 
 [![Build Status](https://travis-ci.org/california-civic-data-coalition/django-calaccess-lobbying-activity.png?branch=master)](https://travis-ci.org/california-civic-data-coalition/django-calaccess-lobbying-activity)
 [![PyPI version](https://badge.fury.io/py/django-calaccess-lobbying-activity.png)](http://badge.fury.io/py/django-calaccess-lobbying-activity)
