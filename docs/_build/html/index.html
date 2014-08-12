@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>django-calaccess-campaign-finance &mdash; django-calaccess-campaign-finance 0.2 documentation</title>
+    <title>django-calaccess-campaign-finance &mdash; django-calaccess-lobbying-activity 0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -23,8 +23,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="django-calaccess-campaign-finance 0.2 documentation" href="#" />
-    <link rel="next" title="Django Cal-Access browser" href="howtouseit.html" /> 
+    <link rel="top" title="django-calaccess-lobbying-activity 0.2 documentation" href="#" />
+    <link rel="next" title="Django Cal-Access Lobbying Activity" href="howtouseit.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,9 +34,9 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="howtouseit.html" title="Django Cal-Access browser"
+          <a href="howtouseit.html" title="Django Cal-Access Lobbying Activity"
              accesskey="N">next</a> |</li>
-        <li><a href="#">django-calaccess-campaign-finance 0.2 documentation</a> &raquo;</li> 
+        <li><a href="#">django-calaccess-lobbying-activity 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -47,14 +47,13 @@
             
   <div class="section" id="django-calaccess-campaign-finance">
 <h1>django-calaccess-campaign-finance<a class="headerlink" href="#django-calaccess-campaign-finance" title="Permalink to this headline">¶</a></h1>
-<p>A simple Django app to build campaign finance data from the cal access database. It is reliant on <a class="reference external" href="https://github.com/california-civic-data-coalition/django-calaccess-campaign-finance">django-calaccess-campaign-finance</a></p>
-<p>A simple Django app to download, extract and load the
-<a class="reference external" href="http://www.sos.ca.gov/prd/cal-access/">CAL-ACCESS</a> campaign finance and lobbying activity database.</p>
+<p>A simple Django app to build campaign finance data from the cal access database. It is reliant on <a class="reference external" href="https://github.com/california-civic-data-coalition/django-calaccess-parser">django-calaccess-parser</a></p>
+<p><a class="reference external" href="https://travis-ci.org/california-civic-data-coalition/django-calaccess-lobbying-activity"><img alt="Build Status" src="https://travis-ci.org/california-civic-data-coalition/django-calaccess-lobbying-activity.png?branch=master" /></a> <a class="reference external" href="http://badge.fury.io/py/django-calaccess-lobbying-activity"><img alt="PyPI version" src="https://badge.fury.io/py/django-calaccess-lobbying-activity.png" /></a> <a class="reference external" href="https://coveralls.io/r/california-civic-data-coalition/django-calaccess-lobbying-activity?branch=master"><img alt="Coverage Status" src="https://coveralls.io/repos/california-civic-data-coalition/django-calaccess-lobbying-activity/badge.png?branch=master" /></a></p>
 <div class="section" id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="howtouseit.html">Django Cal-Access browser</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="howtouseit.html">Django Cal-Access Lobbying Activity</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="howtouseit.html#requirements">Requirements</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howtouseit.html#installation">Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="howtouseit.html#building">Building</a></li>
@@ -66,8 +65,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="managementcommands.html">Management commands</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="managementcommands.html#build-campaign-finance">build_campaign_finance</a></li>
-<li class="toctree-l2"><a class="reference internal" href="managementcommands.html#export-campaign-finance">export_campaign_finance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="managementcommands.html#build-lobbying">build_lobbying</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
@@ -78,11 +76,15 @@
 <div class="section" id="other-resources">
 <h2>Other resources<a class="headerlink" href="#other-resources" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>Code repository: <a class="reference external" href="https://github.com/california-civic-data-coalition/django-calaccess-campaign-finance">https://github.com/california-civic-data-coalition/django-calaccess-campaign-finance</a></li>
-<li>Issues: <a class="reference external" href="https://github.com/california-civic-data-coalition/django-calaccess-campaign-finance/issues">https://github.com/california-civic-data-coalition/django-calaccess-campaign-finance/issues</a></li>
-<li>Packaging: <a class="reference external" href="https://pypi.python.org/pypi/django-calaccess-campaign-finance">https://pypi.python.org/pypi/django-calaccess-campaign-finance</a></li>
-<li>Testing: <a class="reference external" href="https://travis-ci.org/california-civic-data-coalition/django-calaccess-campaign-finance">https://travis-ci.org/california-civic-data-coalition/django-calaccess-campaign-finance</a></li>
-<li>Coverage: <a class="reference external" href="https://coveralls.io/r/california-civic-data-coalition/django-calaccess-campaign-finance">https://coveralls.io/r/california-civic-data-coalition/django-calaccess-campaign-finance</a></li>
+<li>Documentation: <a class="reference external" href="http://django-calaccess-lobbying-activity.rtfd.org">http://django-calaccess-lobbying-activity.rtfd.org</a></li>
+<li>Issues:
+<a class="reference external" href="https://github.com/california-civic-data-coalition/django-calaccess-lobbying-activity/issues">https://github.com/california-civic-data-coalition/django-calaccess-lobbying-activity/issues</a></li>
+<li>Packaging:
+<a class="reference external" href="https://pypi.python.org/pypi/django-calaccess-lobbying-activity">https://pypi.python.org/pypi/django-calaccess-lobbying-activity</a></li>
+<li>Testing:
+<a class="reference external" href="https://travis-ci.org/california-civic-data-coalition/django-calaccess-lobbying-activity">https://travis-ci.org/california-civic-data-coalition/django-calaccess-lobbying-activity</a></li>
+<li>Coverage:
+<a class="reference external" href="https://coveralls.io/r/california-civic-data-coalition/django-calaccess-lobbying-activity">https://coveralls.io/r/california-civic-data-coalition/django-calaccess-lobbying-activity</a></li>
 </ul>
 </div>
 </div>
@@ -104,7 +106,7 @@
 
   <h4>Next topic</h4>
   <p class="topless"><a href="howtouseit.html"
-                        title="next chapter">Django Cal-Access browser</a></p>
+                        title="next chapter">Django Cal-Access Lobbying Activity</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -134,9 +136,9 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="howtouseit.html" title="Django Cal-Access browser"
+          <a href="howtouseit.html" title="Django Cal-Access Lobbying Activity"
              >next</a> |</li>
-        <li><a href="#">django-calaccess-campaign-finance 0.2 documentation</a> &raquo;</li> 
+        <li><a href="#">django-calaccess-lobbying-activity 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

@@ -1,8 +1,7 @@
-Django Cal-Access browser
+Django Cal-Access Lobbying Activity
 =========================
 
-**django-calacces-browser** is a simple Django app to build campaign
-finance data from the cal access database. It is reliant on
+**django-calacces-lobbying-activity** is a simple Django app to lobbying activity data from the cal access database. It is reliant on
 `django-calaccess-parser <https://github.com/california-civic-data-coalition/django-calaccess-parser>`__.
 
 Detailed documentation is in the "docs" directory. *(coming soon)*
@@ -23,15 +22,15 @@ Installation
 
    .. code:: bash
 
-       $ pip install https://github.com/california-civic-data-coalition/django-calaccess-browser/archive/master.zip
+       $ pip install django-calaccess-lobbying-activity
 
--  Add ``campaign_finance`` to your INSTALLED\_APPS setting like this:
+-  Add ``lobbying`` to your INSTALLED\_APPS setting like this:
 
    .. code:: python
 
        INSTALLED_APPS = (
            ...
-           'campaign_finance',
+           'lobbying',
        )
 
    Setup urls
@@ -43,7 +42,7 @@ Installation
 
        ...
        urlpatterns = patterns('',
-           url(r'^browser/', include('campaign_finance.urls')),    
+           url(r'^browser/', include('lobbying.urls')),
        )
 
    Loading the data
@@ -56,7 +55,7 @@ Installation
    .. code:: bash
 
        $ python manage.py syncdb
-       $ python manage.py build_campaign_finance
+       $ python manage.py build_lobbying
 
    :warning: This'll take a while. Go grab some coffee or do something
    else productive with your life.
@@ -87,7 +86,7 @@ API
 
 django-calaccess-browser uses django-tastypie to expose the data as an
 API. Add ``tastypie`` to the project ``INSTALLED_APPS`` and make sure
-you included ``campaign_finance.urls`` in your project's ``urls.py``.
+you included ``lobbying.urls`` in your project's ``urls.py``.
 
 From there visit
 `127.0.0.1:8000/browser/api/v1/filer/?format=json <127.0.0.1:8000/browser/api/v1/filer/?format=json>`__
@@ -100,7 +99,7 @@ You can also export the data into easily queryable flat files.
 
 .. code:: bash
 
-    $ python manage.py export_campaign_finance
+    $ python manage.py export_lobbying
 
 Update the data
 ---------------
@@ -110,7 +109,7 @@ the campaign finance browser app. Then reload them.
 
 You can do something like this, making sure you fill in your database
 and user names correctly.
-``bash  $ python manage.py sqlclear calaccess | mysql -u user_name -p database_name  $ python manage.py sqlclear campaign_finance | mysql -u user_name -p database_name  $ pytnon manage.py syncdb  $ python manage.py downloadcalaccess && python manage.py build_campaign_finance``
+``bash  $ python manage.py sqlclear calaccess | mysql -u user_name -p database_name  $ python manage.py sqlclear lobbying | mysql -u user_name -p database_name  $ pytnon manage.py syncdb  $ python manage.py downloadcalaccess && python manage.py build_lobbying``
 
 Authors
 -------

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Management commands &mdash; django-calaccess-campaign-finance 0.2 documentation</title>
+    <title>Management commands &mdash; django-calaccess-lobbying-activity 0.2 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -23,9 +23,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="django-calaccess-campaign-finance 0.2 documentation" href="index.html" />
+    <link rel="top" title="django-calaccess-lobbying-activity 0.2 documentation" href="index.html" />
     <link rel="next" title="Models" href="models.html" />
-    <link rel="prev" title="Django Cal-Access browser" href="howtouseit.html" /> 
+    <link rel="prev" title="Django Cal-Access Lobbying Activity" href="howtouseit.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,9 +38,9 @@
           <a href="models.html" title="Models"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="howtouseit.html" title="Django Cal-Access browser"
+          <a href="howtouseit.html" title="Django Cal-Access Lobbying Activity"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">django-calaccess-campaign-finance 0.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-calaccess-lobbying-activity 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -51,52 +51,9 @@
             
   <div class="section" id="management-commands">
 <h1>Management commands<a class="headerlink" href="#management-commands" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="build-campaign-finance">
-<h2>build_campaign_finance<a class="headerlink" href="#build-campaign-finance" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash"><div class="highlight"><pre>Usage: manage.py build_campaign_finance <span class="o">[</span>options<span class="o">]</span>
-
-Break out the recipient committee campaign finance data from the CAL-ACCESS dump
-
-Options:
-  -v VERBOSITY, --verbosity<span class="o">=</span>VERBOSITY
-                        Verbosity level; <span class="nv">0</span><span class="o">=</span>minimal output, <span class="nv">1</span><span class="o">=</span>normal output,
-                        <span class="nv">2</span><span class="o">=</span>verbose output, <span class="nv">3</span><span class="o">=</span>very verbose output
-  --settings<span class="o">=</span>SETTINGS   The Python path to a settings module, e.g.
-                        <span class="s2">&quot;myproject.settings.main&quot;</span>. If this isn<span class="s1">&#39;t provided, the</span>
-<span class="s1">                        DJANGO_SETTINGS_MODULE environment variable will be</span>
-<span class="s1">                        used.</span>
-<span class="s1">  --pythonpath=PYTHONPATH</span>
-<span class="s1">                        A directory to add to the Python path, e.g.</span>
-<span class="s1">                        &quot;/home/djangoprojects/myproject&quot;.</span>
-<span class="s1">  --traceback           Raise on exception</span>
-<span class="s1">  --version             show program&#39;</span>s version number and <span class="nb">exit</span>
-  -h, --help            show this <span class="nb">help </span>message and <span class="nb">exit</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="export-campaign-finance">
-<h2>export_campaign_finance<a class="headerlink" href="#export-campaign-finance" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-bash"><div class="highlight"><pre>Usage: manage.py export_campaign_finance <span class="o">[</span>options<span class="o">]</span>
-
-Export parsed data as csv files. Mashes the relational tables down to three easy to query tables.
-
-Options:
-  -v VERBOSITY, --verbosity<span class="o">=</span>VERBOSITY
-                        Verbosity level; <span class="nv">0</span><span class="o">=</span>minimal output, <span class="nv">1</span><span class="o">=</span>normal output,
-                        <span class="nv">2</span><span class="o">=</span>verbose output, <span class="nv">3</span><span class="o">=</span>very verbose output
-  --settings<span class="o">=</span>SETTINGS   The Python path to a settings module, e.g.
-                        <span class="s2">&quot;myproject.settings.main&quot;</span>. If this isn<span class="s1">&#39;t provided, the</span>
-<span class="s1">                        DJANGO_SETTINGS_MODULE environment variable will be</span>
-<span class="s1">                        used.</span>
-<span class="s1">  --pythonpath=PYTHONPATH</span>
-<span class="s1">                        A directory to add to the Python path, e.g.</span>
-<span class="s1">                        &quot;/home/djangoprojects/myproject&quot;.</span>
-<span class="s1">  --traceback           Raise on exception</span>
-<span class="s1">  --skip-contributions  Skip contributions export</span>
-<span class="s1">  --skip-expenditures   Skip expenditures export</span>
-<span class="s1">  --skip-summary        Skip summary export</span>
-<span class="s1">  --version             show program&#39;</span>s version number and <span class="nb">exit</span>
-  -h, --help            show this <span class="nb">help </span>message and <span class="nb">exit</span>
+<div class="section" id="build-lobbying">
+<h2>build_lobbying<a class="headerlink" href="#build-lobbying" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash"><div class="highlight"><pre>
 </pre></div>
 </div>
 </div>
@@ -111,15 +68,14 @@ Options:
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Management commands</a><ul>
-<li><a class="reference internal" href="#build-campaign-finance">build_campaign_finance</a></li>
-<li><a class="reference internal" href="#export-campaign-finance">export_campaign_finance</a></li>
+<li><a class="reference internal" href="#build-lobbying">build_lobbying</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="howtouseit.html"
-                        title="previous chapter">Django Cal-Access browser</a></p>
+                        title="previous chapter">Django Cal-Access Lobbying Activity</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="models.html"
                         title="next chapter">Models</a></p>
@@ -155,9 +111,9 @@ Options:
           <a href="models.html" title="Models"
              >next</a> |</li>
         <li class="right" >
-          <a href="howtouseit.html" title="Django Cal-Access browser"
+          <a href="howtouseit.html" title="Django Cal-Access Lobbying Activity"
              >previous</a> |</li>
-        <li><a href="index.html">django-calaccess-campaign-finance 0.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">django-calaccess-lobbying-activity 0.2 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
