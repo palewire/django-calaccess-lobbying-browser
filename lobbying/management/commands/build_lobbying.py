@@ -1,25 +1,14 @@
-from optparse import make_option
-import csv
 import gc
 
-from django.core.management.base import BaseCommand, CommandError
-from django.db import connection, transaction, reset_queries
+from django.core.management.base import BaseCommand
 
 try:
     from calaccess.models import (
         CvrLobbyDisclosureCd,
-        CvrRegistrationCd,
         FilernameCd,
         FilerFilingsCd,
-        FilerInterestsCd,
-        FilerLinksCd,
-        FilerTypesCd,
         LccmCd,
-        LempCd,
         LexpCd,
-        LobbyAmendmentsCd,
-        LothCd,
-        LpayCd
     )
 except:
     print "you need to load the raw calaccess data\
@@ -365,6 +354,8 @@ class Command(BaseCommand):
             .values_list('filing_id', flat=True)
             .distinct()
         )
+
+        return filing_list
 
     def load_client(self):
         i = 0
