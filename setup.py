@@ -35,7 +35,6 @@ setup(
         'lobbying',
         'lobbying.management',
         'lobbying.management.commands',
-	'lobbying.utils',
     ],
     include_package_data=True,
     license='MIT License',  # example license
