@@ -3,7 +3,6 @@ include =
     lobbying/views.py
     lobbying/models.py
     lobbying/admin.py
-    lobbying/load.py
     lobbying/management/commands/build_lobbying.py
 
 [report]
