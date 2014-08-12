@@ -19,7 +19,7 @@ Jump in.
 
 Clone the repository from `GitHub <https://github.com/california-civic-data-coalition/django-calaccess-lobbying-activity>`_.
 
-Make sure you have the `django-calaccess-parser <https://github.com/california-civic-data-coalition/django-calaccess-campaign-parser>`_ installed otherwise NONE OF THIS WILL WORK.
+Make sure you have the `django-calaccess-parser <https://github.com/california-civic-data-coalition/django-calaccess-parser>`_ installed otherwise NONE OF THIS WILL WORK.
 
 .. code-block:: bash
 
