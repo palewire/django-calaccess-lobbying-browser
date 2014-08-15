@@ -21,7 +21,9 @@ from lobbying.models import (
     Filer,
     Filing,
     Gift,
-    Relationship
+    Relationship,
+    LegislativeSession,
+    Report
 )
 
 
@@ -58,13 +60,14 @@ class Command(BaseCommand):
             from the CAL-ACCESS dump"
 
     def handle(self, *args, **options):
-        self.load_filers()
-        self.load_filings()
-        self.load_relationships()
-        self.load_gifts()
-        self.load_contributions()
-        # self.load_summary()
-        self.load_client()
+        # self.load_filers()
+        # self.load_filings()
+        # self.load_relationships()
+        # self.load_gifts()
+        # self.load_contributions()
+        # # self.load_summary()
+        # self.load_client()
+        self.load_reports()
 
     def load_filers(self):
         '''
@@ -255,10 +258,10 @@ class Command(BaseCommand):
                     insert.payee = (
                         "{0} {1} {2} {3}"
                         .format(
-                            q.payee_namt,
-                            q.payee_namf,
-                            q.payee_naml,
-                            q.payee_nams
+                            q.payee_namt.encode('utf-8'),
+                            q.payee_namf.encode('utf-8'),
+                            q.payee_naml.encode('utf-8'),
+                            q.payee_nams.encode('utf-8')
                         )
                         .strip()
                     )
@@ -299,10 +302,10 @@ class Command(BaseCommand):
                 insert.contributor_name = (
                     "{0} {1} {2} {3}"
                     .format(
-                        q.ctrib_namt,
-                        q.ctrib_namf,
-                        q.ctrib_naml,
-                        q.ctrib_nams
+                        q.ctrib_namt.encode('utf-8'),
+                        q.ctrib_namf.encode('utf-8'),
+                        q.ctrib_naml.encode('utf-8'),
+                        q.ctrib_nams.encode('utf-8')
                     )
                     .strip()
                 )
@@ -325,10 +328,10 @@ class Command(BaseCommand):
                 insert.recipient = (
                     "{0} {1} {2} {3}"
                     .format(
-                        q.recip_namt,
-                        q.recip_namf,
-                        q.recip_naml,
-                        q.recip_nams
+                        q.recip_namt.encode('utf-8'),
+                        q.recip_namf.encode('utf-8'),
+                        q.recip_naml.encode('utf-8'),
+                        q.recip_nams.encode('utf-8')
                     )
                     .strip()
                 )
@@ -366,7 +369,7 @@ class Command(BaseCommand):
             Relationship
             .objects
             .filter(related_link_type='CLIENT OF A FIRM')
-            .values_list('filer_id_raw', flat=True)
+            .values_list('filer__filer_id_raw', flat=True)
             .distinct()
         )
 
@@ -384,5 +387,71 @@ class Command(BaseCommand):
                 bulk_records = []
         if len(bulk_records) > 0:
             Client.objects.bulk_create(bulk_records)
+            bulk_records = []
+            print '%s records created ...' % i
+
+    def load_reports(self):  # Experimental
+        self.stdout.write('Loading lobbyist periodic reports ...')
+        i = 0
+        bulk_records = []
+
+        for filer in Filer.objects.all():
+            # get a list of all the filings on record
+            all_filing_list = list(
+                FilerFilingsCd
+                .objects
+                .filter(filer_id=filer.filer_id_raw)
+                .values_list('filing_id', flat=True)
+                .distinct()
+            )
+
+            # but just import the filings that we have data for. There are lots
+            # of orphan filing records. they exist in the filngs table, but
+            # have to data associated with them in the other tables.
+            filing_list = list(
+                CvrLobbyDisclosureCd
+                .objects
+                .filter(filing_id__in=all_filing_list)
+                .values(
+                    'filing_id',
+                    'filer_naml',
+                    'filer_namf',
+                    'lby_actvty',
+                    'rpt_date',
+                    'from_date',
+                    'thru_date'
+                )
+                .distinct()
+            )
+
+            #Speed this up by doing one query to get all the pks rather than running a new select for each row.
+            filing_pairs = Filing.objects.filter(filing_id_raw__in=[f['filing_id'] for f in filing_list]).values('pk', 'filing_id_raw')
+            # Now make a lookup dictionary so you can get the filing pk by raw id
+            filing_lookup = {}
+            for f in filing_pairs:
+                filing_lookup[f['filing_id_raw']] = f['pk']
+
+            for filing in filing_list:
+                insert = Report()
+                insert.filer = filer
+                insert.filing_id = filing_lookup[filing['filing_id']]
+                insert.filer_lname = filing['filer_naml']
+                insert.filer_fname = filing['filer_namf']
+                insert.lobbying_description = filing['lby_actvty']
+                insert.report_date = filing['rpt_date']
+                insert.report_period_start = filing['from_date']
+                insert.report_period_end = filing['thru_date']
+                #insert.legislative_session = filing['']
+
+                # insert.save()
+                i += 1
+                bulk_records.append(insert)
+                if i % 5000 == 0:
+                    Report.objects.bulk_create(bulk_records)
+                    print '%s records created ...' % i
+                    bulk_records = []
+
+        if len(bulk_records) > 0:
+            Report.objects.bulk_create(bulk_records)
             bulk_records = []
             print '%s records created ...' % i

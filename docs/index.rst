@@ -14,6 +14,7 @@ Documentation
    managementcommands
    models
    howtocontribute
+   usingthedata
 
 Other resources
 ---------------

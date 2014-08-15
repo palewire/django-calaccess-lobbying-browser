@@ -35,4 +35,4 @@ sh==1.09
 six==1.4.1
 tornado==3.2
 xlrd==0.9.2
-django-calaccess-parser=0.4
+django-calaccess-parser==0.5
