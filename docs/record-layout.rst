@@ -1,6 +1,6 @@
 Key tables and also have a spreadsheet including common fields for joins and additional description of key fields.
 
-TABLE	DESCRIPTION
+Table name and description
 
 CVR_LOBBY_DISCLOSURE_CD:	LOBBYING ACTIVITY BY LOBBYIST, INCLUDES CHECKBOX RESPONSES ON PURPOSE
 
