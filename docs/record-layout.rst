@@ -11,4 +11,4 @@ LCCM_CD:	CONTRIBUTIONS BY LOBBYISTS, INCLUDING FILINGID AND RECIPIENT NAME (MOST
 CVR2_CAMPAIGN_DISCLOSURE_CD:	INCLUDES DATA ON SUPPLEMENTAL INDEPENDENT EXPENDITURE REPORTS, RECIPIENT COMMITTEE CAMPAIGN STATEMENTS AND OFFICEHOLDER AND CANDIDATE CAMPAIGN STATEMENT INFO.
 
 
-Record layout for fields and tables can be found here: https://drive.google.com/file/d/0B0-s_hU2WGE-R3lxbk5mVlBEcFE/edit?usp=sharing
+Record layout for fields and tables can be found here: https://docs.google.com/spreadsheets/d/1pckd-aDQjAXQ9u4KutjnoqB1hFomI4BBoK36oYZV4HQ/edit?usp=sharing
