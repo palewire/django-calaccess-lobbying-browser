@@ -33,6 +33,7 @@ pyzmq==14.0.1
 requests==2.0.1
 sh==1.09
 six==1.4.1
+sphinx
 tornado==3.2
 xlrd==0.9.2
 django-calaccess-parser==0.5

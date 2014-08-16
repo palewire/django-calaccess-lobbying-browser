@@ -73,6 +73,7 @@ class Command(BaseCommand):
         '''
         Load up all the filer types associated with lobbying reports
         '''
+        self.stdout.write('Loading lobbyist filers ...')
         i = 0
         bulk_records = []
         filer_id_list = list(
@@ -134,6 +135,7 @@ class Command(BaseCommand):
         And before loading the filngs, make sure there is
         actually data associated with them
         '''
+        self.stdout.write('Loading lobbyist filings ...')
         i = 0
         bulk_records = []
         for filer in Filer.objects.all():
@@ -191,6 +193,7 @@ class Command(BaseCommand):
         For each Filer, decipher all the links tied
         to them inside the FilerLinksCd table
         '''
+        self.stdout.write('Loading lobbyist relationships ...')
         i = 0
         bulk_records = []
         for f in Filer.objects.all():
@@ -223,6 +226,7 @@ class Command(BaseCommand):
             any other form of compensation, but do not include
             campaign contributions.
         '''
+        self.stdout.write('Loading lobbyist gifts ...')
         i = 0  # Loop counter to trigger bulk saves
         bulk_records = []
         filing_id_list = list(
@@ -285,6 +289,7 @@ class Command(BaseCommand):
         These are the campaign contributions that
         the lobbyists and firms reported donating
         '''
+        self.stdout.write('Loading lobbyist contributions ...')
         i = 0
         bulk_records = []
         for f in Filing.objects.filter(
@@ -361,6 +366,7 @@ class Command(BaseCommand):
         return filing_list
 
     def load_client(self):
+        self.stdout.write('Loading clients ...')
         i = 0
         bulk_records = []
 
@@ -395,63 +401,161 @@ class Command(BaseCommand):
         i = 0
         bulk_records = []
 
-        for filer in Filer.objects.all():
-            # get a list of all the filings on record
-            all_filing_list = list(
-                FilerFilingsCd
-                .objects
-                .filter(filer_id=filer.filer_id_raw)
-                .values_list('filing_id', flat=True)
-                .distinct()
-            )
+        filing_id_amendment_pairs = Filing.objects.all().values('filing_id_raw', 'amend_id', 'filer__pk')
 
-            # but just import the filings that we have data for. There are lots
-            # of orphan filing records. they exist in the filngs table, but
-            # have to data associated with them in the other tables.
-            filing_list = list(
-                CvrLobbyDisclosureCd
-                .objects
-                .filter(filing_id__in=all_filing_list)
-                .values(
-                    'filing_id',
-                    'filer_naml',
-                    'filer_namf',
-                    'lby_actvty',
-                    'rpt_date',
-                    'from_date',
-                    'thru_date'
-                )
-                .distinct()
-            )
+        filing_filers = {}
+        amend_combos = {}
+        for f in filing_id_amendment_pairs:
 
-            #Speed this up by doing one query to get all the pks rather than running a new select for each row.
-            filing_pairs = Filing.objects.filter(filing_id_raw__in=[f['filing_id'] for f in filing_list]).values('pk', 'filing_id_raw')
-            # Now make a lookup dictionary so you can get the filing pk by raw id
-            filing_lookup = {}
-            for f in filing_pairs:
-                filing_lookup[f['filing_id_raw']] = f['pk']
+            if f['amend_id'] not in amend_combos:
+                amend_combos[f['amend_id']] = []
+            amend_combos[f['amend_id']].append(f['filing_id_raw'])
 
-            for filing in filing_list:
+            filing_filers[f['filing_id_raw']] = f['filer__pk']
+
+        print amend_combos.keys()
+
+        for ak, av in amend_combos.iteritems():
+            matchset = list(CvrLobbyDisclosureCd.objects.filter(
+                filing_id__in=av,
+                amend_id=ak
+            ).values(
+                'filing_id',
+                'filer_naml',
+                'filer_namf',
+                'lby_actvty',
+                'rpt_date',
+                'from_date',
+                'thru_date',
+                'amend_id',
+            ))
+
+            for m in matchset:
+                # try:
                 insert = Report()
-                insert.filer = filer
-                insert.filing_id = filing_lookup[filing['filing_id']]
-                insert.filer_lname = filing['filer_naml']
-                insert.filer_fname = filing['filer_namf']
-                insert.lobbying_description = filing['lby_actvty']
-                insert.report_date = filing['rpt_date']
-                insert.report_period_start = filing['from_date']
-                insert.report_period_end = filing['thru_date']
+                insert.filer_id = filing_filers[m['filing_id']]
+                insert.filing_id = m['filing_id']
+                insert.amend_id = m['amend_id']
+                insert.filer_lname = m['filer_naml']
+                insert.filer_fname = m['filer_namf']
+                insert.lobbying_description = m['lby_actvty']
+                insert.report_date = m['rpt_date']
+                insert.report_period_start = m['from_date']
+                insert.report_period_end = m['thru_date']
                 #insert.legislative_session = filing['']
 
-                # insert.save()
                 i += 1
                 bulk_records.append(insert)
                 if i % 5000 == 0:
+                    print 'About to create %s ...' % i
                     Report.objects.bulk_create(bulk_records)
                     print '%s records created ...' % i
                     bulk_records = []
+                # except:
+                #     pass
 
         if len(bulk_records) > 0:
+            print 'About to create %s ...' % i
             Report.objects.bulk_create(bulk_records)
             bulk_records = []
             print '%s records created ...' % i
+
+        # for fa in filing_id_amendment_pairs:
+        #     try:
+        #         match = CvrLobbyDisclosureCd.objects.get(
+        #             filing_id=fa['filing_id_raw'],
+        #             amend_id=fa['amend_id']
+        #         ).values(
+        #             'filing_id',
+        #             'filer_naml',
+        #             'filer_namf',
+        #             'lby_actvty',
+        #             'rpt_date',
+        #             'from_date',
+        #             'thru_date',
+        #             'amend_id',
+        #         )
+
+        #         insert = Report()
+        #         insert.filer_id = filing_id_amendment_pairs['filer__pk']
+        #         insert.filing_id = match['filing_id']
+        #         insert.amend_id = match['amend_id']
+        #         insert.filer_lname = match['filer_naml']
+        #         insert.filer_fname = match['filer_namf']
+        #         insert.lobbying_description = match['lby_actvty']
+        #         insert.report_date = match['rpt_date']
+        #         insert.report_period_start = match['from_date']
+        #         insert.report_period_end = match['thru_date']
+        #         #insert.legislative_session = filing['']
+
+        #         i += 1
+        #         bulk_records.append(insert)
+        #         if i % 5000 == 0:
+        #             Report.objects.bulk_create(bulk_records)
+        #             print '%s records created ...' % i
+        #             bulk_records = []
+        #     except:
+        #         pass
+
+        # if len(bulk_records) > 0:
+        #     Report.objects.bulk_create(bulk_records)
+        #     bulk_records = []
+        #     print '%s records created ...' % i
+
+
+        #     report_matches.append()
+        # # Find matching combinations in the raw cd
+        # filing_list = list(
+        #         CvrLobbyDisclosureCd
+        #         .objects
+        #         .filter(filing_id__in=all_filing_list)
+        #         .values(
+        #             'filing_id',
+        #             'filer_naml',
+        #             'filer_namf',
+        #             'lby_actvty',
+        #             'rpt_date',
+        #             'from_date',
+        #             'thru_date',
+        #             'amend_id',
+        #         )
+        #     )
+
+        # for filer in Filer.objects.all():
+        #     # get a list of all the filings on record
+        #     all_filing_list = list(
+        #         FilerFilingsCd
+        #         .objects
+        #         .filter(filer_id=filer.filer_id_raw)
+        #         .values_list('filing_id', flat=True)
+        #         .distinct()
+        #     )
+
+        #     # but just import the filings that we have data for. There are lots
+        #     # of orphan filing records. they exist in the filngs table, but
+        #     # have to data associated with them in the other tables.
+        #     filing_list = list(
+        #         CvrLobbyDisclosureCd
+        #         .objects
+        #         .filter(filing_id__in=all_filing_list)
+        #         .values(
+        #             'filing_id',
+        #             'filer_naml',
+        #             'filer_namf',
+        #             'lby_actvty',
+        #             'rpt_date',
+        #             'from_date',
+        #             'thru_date',
+        #             'amend_id',
+        #         )
+        #         .distinct()
+        #     )
+
+        #     #Speed this up by doing one query to get all the pks rather than running a new select for each row.
+        #     filing_pairs = Filing.objects.filter(filing_id_raw__in=[f['filing_id'] for f in filing_list], amend_id__in=[f['amend_id'] for f in filing_list]).values('pk', 'filing_id_raw', 'amend_id')
+            # Now make a lookup dictionary so you can get the filing pk by raw id
+            # filing_lookup = {}
+            # for f in filing_pairs:
+            #     filing_lookup[f['filing_id_raw']] = f['pk']
+
+            

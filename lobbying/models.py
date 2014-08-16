@@ -202,6 +202,7 @@ class LegislativeSession(models.Model):
 class Report(models.Model):
     filer = models.ForeignKey(Filer)
     filing = models.ForeignKey(Filing)
+    amend_id = models.IntegerField(null=True)  # Shouldn't actually need to use this for much since it's the same as in Filing, but a checking mechanism
     filer_lname = models.CharField(max_length=255, blank=True, db_index=True)  # filer_naml
     filer_fname = models.CharField(max_length=255, blank=True, db_index=True)  # filer_namf
     lobbying_description = models.TextField(blank=True)  # lby_actvty
@@ -209,4 +210,5 @@ class Report(models.Model):
     report_period_start = models.DateField(null=True)  # from_date
     report_period_end = models.DateField(null=True)  # thru_date
     legislative_session = models.ForeignKey(LegislativeSession, null=True)
+
     # need to add more "things that we did in this period"
